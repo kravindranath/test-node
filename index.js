@@ -2,10 +2,17 @@
 const express = require("express");
 const app = express();
 const process = require("process");
-const port = 3000;
+const port = 8080;
 
 app.get("/", (req, res) => {
-  res.send(`Hello! - ${process.versions.node}`);
+  const data = {
+    message: "Hello, world!",
+    status: "success",
+    envName: process.env.NODE_ENV,
+  };
+
+  // Send JSON response
+  res.json(data);
 });
 
 app.listen(port, () => {
