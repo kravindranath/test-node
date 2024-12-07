@@ -5,8 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "cross-env NODE_ENV=production node index.js",
-        "dev": "cross-env NODE_ENV=development nodemon index.js"
+        "build": "cross-env esbuild index.js --bundle --platform=node --outfile=dist/bundle.js",
+        "start": "cross-env NODE_ENV=production node dist/bundle.js",
+        "start:dev": "cross-env NODE_ENV=development nodemon index.js"
     },
     "author": "kravindranath",
     "license": "MIT",
@@ -20,6 +21,7 @@
         "node": ">=18.0.0"
     },
     "devDependencies": {
+        "esbuild": "^0.24.0",
         "nodemon": "^3.1.7"
     }
 }
