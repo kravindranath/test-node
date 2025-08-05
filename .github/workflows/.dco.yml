@@ -1,4 +1,4 @@
-name: DCO Check
+name: Developer Certificate of Origin (DCO)
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   dco:
-    name: Verify Developer Certificate of Origin (DCO)
+    name: Verify DCO check
     runs-on: ubuntu-latest
 
     steps:
