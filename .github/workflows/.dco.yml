@@ -2,28 +2,44 @@ name: DCO Check
 
 on:
   push:
-    branches: ["**"] # All branches
+    branches: ["**"] # Trigger on all branches
   pull_request:
-    branches: ["**"] # All branches
+    branches: ["**"] # Trigger on all branches
 
 jobs:
   dco:
+    name: Verify Developer Certificate of Origin (DCO)
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo with full history
+      - name: Checkout repository with full commit history
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Required to get all commit history
+          fetch-depth: 0 # Important: required to access all commit history
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
 
-      - name: Install dco-check tool
+      - name: Install DCO check tool
         run: pip install dco-check
 
       - name: Run DCO check
-        run: dco-check --verbose
+        run: |
+          echo "🔍 Verifying commits for DCO (Developer Certificate of Origin)..."
+          if ! dco-check --verbose; then
+            echo "::error::❌ DCO check failed!"
+            echo "::error::Each commit must be signed off with a 'Signed-off-by' line."
+            echo "::error::To fix this:"
+            echo "::error::  1. Amend your commit with a sign-off:"
+            echo "::error::     git commit --amend --signoff"
+            echo "::error::  2. Or sign your next commit like:"
+            echo "::error::     git commit -s -m 'Your message here'"
+            echo "::error::  3. Then push the change:"
+            echo "::error::     git push --force (if amending)"
+            echo "::error::Learn more about DCO: https://developercertificate.org/"
+            exit 1
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
