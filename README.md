@@ -1,3 +1,3 @@
 # test-node
 
-test node app
+testing application on node
