@@ -1,21 +1,27 @@
-name: DCO Commit Check
+name: DCO Check
 
 on:
   push:
-    branches: ["**"] # all branches including main, dev, and feature/*
+    branches: ["**"] # All branches
   pull_request:
-    branches: ["**"] # all branches including main, dev, and feature/*
+    branches: ["**"] # All branches
 
 jobs:
   dco:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repo with full history
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Required for checking all commits
+          fetch-depth: 0 # Required to get all commit history
 
-      - name: Check DCO Sign-offs
-        uses: tisonkun/dco@v1
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          fail_on_error: true
+          python-version: "3.x"
+
+      - name: Install dco-check tool
+        run: pip install dco-check
+
+      - name: Run DCO check
+        run: dco-check --verbose
