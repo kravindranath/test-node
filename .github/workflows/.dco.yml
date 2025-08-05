@@ -25,3 +25,5 @@ jobs:
 
       - name: Run DCO check
         run: dco-check --verbose
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
