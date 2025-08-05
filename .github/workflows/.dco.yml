@@ -16,6 +16,6 @@ jobs:
           fetch-depth: 0 # Required for checking all commits
 
       - name: Check DCO Sign-offs
-        uses: lucacome/dco-check@v1
+        uses: tisonkun/dco@v1
         with:
           fail_on_error: true
